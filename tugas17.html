@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kereta Api Indonesia - Solusi Perjalanan Terpercaya</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #00529B;
+            --secondary-color: #FF6B35;
+            --accent-color: #FFC107;
+            --dark-color: #1a1a1a;
+            --light-bg: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #003d7a 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: white !important;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-brand i {
+            font-size: 2rem;
+            color: var(--accent-color);
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('https://picsum.photos/seed/keretaapi/1920/1080') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* Search Box */
+        .search-box {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 900px;
+            margin: 0 auto;
+            animation: slideUp 0.8s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(0, 82, 155, 0.25);
+        }
+
+        .btn-search {
+            background: linear-gradient(135deg, var(--secondary-color), #ff8c5a);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-search:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Service Cards */
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-color: var(--primary-color);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        /* Train Types */
+        .train-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .train-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .train-img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .train-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-color);
+            color: var(--dark-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        /* Route Section */
+        .route-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .route-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Promo Section */
+        .promo-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .promo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .promo-badge {
+            position: absolute;
+            top: 20px;
+            left: -30px;
+            background: var(--secondary-color);
+            color: white;
+            padding: 5px 40px;
+            transform: rotate(-45deg);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark-color) 0%, #2c2c2c 100%);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 80px;
+        }
+
+        .footer-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .social-icon {
+            font-size: 1.5rem;
+            color: white;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        /* Floating Button */
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--secondary-color);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+            background: var(--primary-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .search-box {
+                padding: 20px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        .loading-spinner.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div class="loading-spinner">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-train-front"></i>
+                KAI Indonesia
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Layanan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#trains">Jenis Kereta</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#routes">Rute</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#promo">Promo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Kontak</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title" data-aos="fade-up">Selamat Datang di Kereta Api Indonesia</h1>
+                <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">Solusi Perjalanan Aman, Nyaman, dan Terpercaya</p>
+                
+                <!-- Search Box -->
+                <div class="search-box" data-aos="fade-up" data-aos-delay="400">
+                    <form id="searchForm">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">Dari</label>
+                                <select class="form-select" required>
+                                    <option value="">Pilih Stasiun</option>
+                                    <option value="GMR">Gambir - Jakarta</option>
+                                    <option value="BD">Bandung</option>
+                                    <option value="YK">Yogyakarta</option>
+                                    <option value="SBI">Surabaya</option>
+                                    <option value="SM">Semarang</option>
+                                    <option value="MDN">Medan</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">Ke</label>
+                                <select class="form-select" required>
+                                    <option value="">Pilih Stasiun</option>
+                                    <option value="GMR">Gambir - Jakarta</option>
+                                    <option value="BD">Bandung</option>
+                                    <option value="YK">Yogyakarta</option>
+                                    <option value="SBI">Surabaya</option>
+                                    <option value="SM">Semarang</option>
+                                    <option value="MDN">Medan</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label fw-bold">Tanggal</label>
+                                <input type="date" class="form-control" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label fw-bold">Penumpang</label>
+                                <select class="form-select">
+                                    <option value="1">1 Dewasa</option>
+                                    <option value="2">2 Dewasa</option>
+                                    <option value="3">3 Dewasa</option>
+                                    <option value="4">4 Dewasa</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                <button type="submit" class="btn btn-search w-100">
+                                    <i class="bi bi-search me-2"></i>Cari
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold" data-aos="fade-up">Layanan Kami</h2>
+                <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">Nikmati berbagai layanan terbaik kami</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-card">
+                        <i class="bi bi-wifi service-icon"></i>
+                        <h4>WiFi Gratis</h4>
+                        <p class="text-muted">Nikmati akses internet gratis selama perjalanan</p>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-card">
+                        <i class="bi bi-cup-hot service-icon"></i>
+                        <h4>Makanan & Minuman</h4>
+                        <p class="text-muted">Menu beragam dengan cita rasa Indonesia</p>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-card">
+                        <i class="bi bi-bag-check service-icon"></i>
+                        <h4>Bagasi Aman</h4>
+                        <p class="text-muted">Kapasitas bagasi hingga 20kg per penumpang</p>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service-card">
+                        <i class="bi bi-headset service-icon"></i>
+                        <h4>Layanan 24/7</h4>
+                        <p class="text-muted">Customer service siap membantu kapan saja</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Train Types Section -->
+    <section id="trains" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold" data-aos="fade-up">Jenis Kereta Api</h2>
+                <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">Pilih kereta sesuai kebutuhan perjalanan Anda</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="train-card position-relative">
+                        <img src="https://picsum.photos/seed/argoparahyangan/400/200" alt="Argo Parahyangan" class="train-img">
+                        <span class="train-badge">EKSEKUTIF</span>
+                        <div class="p-3">
+                            <h4>Argo Parahyangan</h4>
+                            <p class="text-muted">Jakarta - Bandung PP</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-primary fw-bold">Mulai Rp 150.000</span>
+                                <button class="btn btn-sm btn-outline-primary">Detail</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="train-card position-relative">
+                        <img src="https://picsum.photos/seed/sembrani/400/200" alt="Sembrani" class="train-img">
+                        <span class="train-badge">EKSEKUTIF</span>
+                        <div class="p-3">
+                            <h4>Kereta Sembrani</h4>
+                            <p class="text-muted">Surabaya - Jakarta PP</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-primary fw-bold">Mulai Rp 450.000</span>
+                                <button class="btn btn-sm btn-outline-primary">Detail</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="train-card position-relative">
+                        <img src="https://picsum.photos/seed/bisnis/400/200" alt="Bisnis" class="train-img">
+                        <span class="train-badge">BISNIS</span>
+                        <div class="p-3">
+                            <h4>Kereta Bisnis</h4>
+                            <p class="text-muted">Berbagai rute tersedia</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-primary fw-bold">Mulai Rp 200.000</span>
+                                <button class="btn btn-sm btn-outline-primary">Detail</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="train-card position-relative">
+                        <img src="https://picsum.photos/seed/ekonomi/400/200" alt="Ekonomi" class="train-img">
+                        <span class="train-badge">EKONOMI</span>
+                        <div class="p-3">
+                            <h4>Kereta Ekonomi</h4>
+                            <p class="text-muted">Harga terjangkau, nyaman</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-primary fw-bold">Mulai Rp 80.000</span>
+                                <button class="btn btn-sm btn-outline-primary">Detail</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="train-card position-relative">
+                        <img src="https://picsum.photos/seed/taksaka/400/200" alt="Taksaka" class="train-img">
+                        <span class="train-badge">EKSEKUTIF</span>
+                        <div class="p-3">
+                            <h4>Taksaka</h4>
+                            <p class="text-muted">Yogyakarta - Jakarta PP</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-primary fw-bold">Mulai Rp 350.000</span>
+                                <button class="btn btn-sm btn-outline-primary">Detail</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="700">
+                    <div class="train-card position-relative">
+                        <img src="https://picsum.photos/seed/lokal/400/200" alt="Lokal" class="train-img">
+                        <span class="train-badge">LOKAL</span>
+                        <div class="p-3">
+                            <h4>Kereta Lokal</h4>
+                            <p class="text-muted">Rute Jabodetabek & sekitarnya</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-primary fw-bold">Mulai Rp 3.000</span>
+                                <button class="btn btn-sm btn-outline-primary">Detail</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Routes Section -->
+    <section id="routes" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold" data-aos="fade-up">Rute Populer</h2>
+                <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">Jelajahi destinasi favorit dengan kereta api</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6" data-aos="fade-right">
+                    <div class="route-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-1">Jakarta - Bandung</h5>
+                                <p class="mb-0 opacity-75">2 jam 30 menit</p>
+                            </div>
+                            <div class="text-end">
+                                <p class="mb-0 fw-bold">Rp 150.000</p>
+                                <small>24 Jadwal/Hari</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="route-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-1">Jakarta - Surabaya</h5>
+                                <p class="mb-0 opacity-75">8 jam 30 menit</p>
+                            </div>
+                            <div class="text-end">
+                                <p class="mb-0 fw-bold">Rp 450.000</p>
+                                <small>12 Jadwal/Hari</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="route-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-1">Jakarta - Yogyakarta</h5>
+                                <p class="mb-0 opacity-75">7 jam 45 menit</p>
+                            </div>
+                            <div class="text-end">
+                                <p class="mb-0 fw-bold">Rp 350.000</p>
+                                <small>10 Jadwal/Hari</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="fade-left">
+                    <div class="route-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-1">Bandung - Surabaya</h5>
+                                <p class="mb-0 opacity-75">9 jam 15 menit</p>
+                            </div>
+                            <div class="text-end">
+                                <p class="mb-0 fw-bold">Rp 380.000</p>
+                                <small>6 Jadwal/Hari</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="route-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-1">Semarang - Jakarta</h5>
+                                <p class="mb-0 opacity-75">5 jam 30 menit</p>
+                            </div>
+                            <div class="text-end">
+                                <p class="mb-0 fw-bold">Rp 250.000</p>
+                                <small>15 Jadwal/Hari</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="route-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-1">Surabaya - Malang</h5>
+                                <p class="mb-0 opacity-75">2 jam 15 menit</p>
+                            </div>
+                            <div class="text-end">
+                                <p class="mb-0 fw-bold">Rp 80.000</p>
+                                <small>20 Jadwal/Hari</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo Section -->
+    <section id="promo" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold" data-aos="fade-up">Promo Terbaru</h2>
+                <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">Dapatkan penawaran spesial untuk perjalanan Anda</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
+                    <div class="promo-card position-relative">
+                        <span class="promo-badge">DISKON 50%</span>
+                        <img src="https://picsum.photos/seed/promo1/400/250" alt="Promo 1" class="w-100">
+                        <div class="p-3">
+                            <h5>Weekend Special</h5>
+                            <p class="text-muted">Diskon 50% untuk perjalanan Sabtu-Minggu</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-danger">Berakhir dalam 3 hari</small>
+                                <button class="btn btn-sm btn-primary">Ambil</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="flip-left" data-aos-delay="300">
+                    <div class="promo-card position-relative">
+                        <span class="promo-badge">CASHBACK</span>
+                        <img src="https://picsum.photos/seed/promo2/400/250" alt="Promo 2" class="w-100">
+                        <div class="p-3">
+                            <h5>Flash Sale</h5>
+                            <p class="text-muted">Cashback 20% dengan kartu kredit tertentu</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-danger">Berakhir dalam 5 hari</small>
+                                <button class="btn btn-sm btn-primary">Ambil</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="flip-left" data-aos-delay="400">
+                    <div class="promo-card position-relative">
+                        <span class="promo-badge">GRATIS</span>
+                        <img src="https://picsum.photos/seed/promo3/400/250" alt="Promo 3" class="w-100">
+                        <div class="p-3">
+                            <h5>Early Bird</h5>
+                            <p class="text-muted">Gratis makanan untuk pemesanan 30 hari sebelumnya</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-success">Tersedia</small>
+                                <button class="btn btn-sm btn-primary">Ambil</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold" data-aos="fade-up">Hubungi Kami</h2>
+                <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">Kami siap membantu Anda 24/7</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-center">
+                        <i class="bi bi-telephone-fill text-primary" style="font-size: 3rem;"></i>
+                        <h4 class="mt-3">Call Center</h4>
+                        <p>121 (dari telepon rumah)</p>
+                        <p>021-121 (dari ponsel)</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-center">
+                        <i class="bi bi-envelope-fill text-primary" style="font-size: 3rem;"></i>
+                        <h4 class="mt-3">Email</h4>
+                        <p>customer.care@kai.id</p>
+                        <p>cs@kai.id</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-center">
+                        <i class="bi bi-geo-alt-fill text-primary" style="font-size: 3rem;"></i>
+                        <h4 class="mt-3">Alamat</h4>
+                        <p>Jl. Perintis Kemerdekaan No. 1</p>
+                        <p>Jakarta 10510</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="mb-3">Tentang KAI</h5>
+                    <p class="text-muted">PT Kereta Api Indonesia (Persero) adalah Badan Usaha Milik Negara Indonesia yang menyelenggarakan jasa angkutan kereta api.</p>
+                    <div class="mt-3">
+                        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="footer-link">Tiket Online</a></li>
+                        <li><a href="#" class="footer-link">Jadwal Kereta</a></li>
+                        <li><a href="#" class="footer-link">Promo</a></li>
+                        <li><a href="#" class="footer-link">Berita</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h5 class="mb-3">Layanan</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="footer-link">Kereta Api</a></li>
+                        <li><a href="#" class="footer-link">Kargo</a></li>
+                        <li><a href="#" class="footer-link">Pariwisata</a></li>
+                        <li><a href="#" class="footer-link">Properti</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Newsletter</h5>
+                    <p class="text-muted">Dapatkan informasi promo terbaru</p>
+                    <form class="mt-3">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Email Anda">
+                            <button class="btn btn-warning" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2024 Kereta Api Indonesia. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Button -->
+    <div class="floating-btn" onclick="scrollToTop()">
+        <i class="bi bi-arrow-up"></i>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.padding = '10px 0';
+                navbar.style.background = 'linear-gradient(135deg, rgba(0,82,155,0.95) 0%, rgba(0,61,122,0.95) 100%)';
+            } else {
+                navbar.style.padding = '15px 0';
+                navbar.style.background = 'linear-gradient(135deg, var(--primary-color) 0%, #003d7a 100%)';
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Show/hide floating button
+        window.addEventListener('scroll', function() {
+            const floatingBtn = document.querySelector('.floating-btn');
+            if (window.scrollY > 300) {
+                floatingBtn.style.display = 'flex';
+            } else {
+                floatingBtn.style.display = 'none';
+            }
+        });
+
+        // Form submission
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading spinner
+            const spinner = document.querySelector('.loading-spinner');
+            spinner.classList.add('active');
+            
+            // Simulate API call
+            setTimeout(() => {
+                spinner.classList.remove('active');
+                
+                // Show success message
+                const alert = document.createElement('div');
+                alert.className = 'alert alert-success alert-dismissible fade show position-fixed top-50 start-50 translate-middle';
+                alert.style.zIndex = '9999';
+                alert.innerHTML = `
+                    <strong>Success!</strong> Pencarian tiket sedang diproses.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+                document.body.appendChild(alert);
+                
+                setTimeout(() => {
+                    alert.remove();
+                }, 3000);
+            }, 1500);
+        });
+
+        // Set minimum date to today
+        const dateInput = document.querySelector('input[type="date"]');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.min = today;
+        dateInput.value = today;
+
+        // Interactive route cards
+        document.querySelectorAll('.route-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove active class from all cards
+                document.querySelectorAll('.route-card').forEach(c => {
+                    c.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                });
+                
+                // Add active class to clicked card
+                this.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+            });
+        });
+
+        // Newsletter subscription
+        document.querySelector('footer form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            
+            if (email) {
+                const alert = document.createElement('div');
+                alert.className = 'alert alert-success alert-dismissible fade show position-fixed top-50 start-50 translate-middle';
+                alert.style.zIndex = '9999';
+                alert.innerHTML = `
+                    <strong>Terima Kasih!</strong> Email ${email} telah terdaftar.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+                document.body.appendChild(alert);
+                
+                this.reset();
+                
+                setTimeout(() => {
+                    alert.remove();
+                }, 3000);
+            }
+        });
+
+        // Train detail buttons
+        document.querySelectorAll('.train-card button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const trainName = this.closest('.train-card').querySelector('h4').textContent;
+                
+                const modal = document.createElement('div');
+                modal.className = 'modal fade';
+                modal.innerHTML = `
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">${trainName}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h6>Fasilitas:</h6>
+                                <ul>
+                                    <li>AC</li>
+                                    <li>WiFi Gratis</li>
+                                    <li>Toilet</li>
+                                    <li>Makanan & Minuman</li>
+                                    <li>Port Pengisian Daya</li>
+                                </ul>
+                                <h6 class="mt-3">Kelas:</h6>
+                                <p>Eksekutif, Bisnis, Ekonomi</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                <button type="button" class="btn btn-primary">Pesan Sekarang</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                const bsModal = new bootstrap.Modal(modal);
+                bsModal.show();
+                
+                modal.addEventListener('hidden.bs.modal', function() {
+                    modal.remove();
+                });
+            });
+        });
+
+        // Promo buttons
+        document.querySelectorAll('.promo-card button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const promoTitle = this.closest('.promo-card').querySelector('h5').textContent;
+                
+                const alert = document.createElement('div');
+                alert.className = 'alert alert-info alert-dismissible fade show position-fixed top-50 start-50 translate-middle';
+                alert.style.zIndex = '9999';
+                alert.innerHTML = `
+                    <strong>Promo "${promoTitle}"</strong> telah ditambahkan ke keranjang!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+                document.body.appendChild(alert);
+                
+                setTimeout(() => {
+                    alert.remove();
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>
